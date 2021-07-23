@@ -2,7 +2,7 @@ var commandInfo = { //This variable holds the command information for help comma
     description: 'Lists all MR stations.',
     usage: ['liststations']
 };
-import { stationData } from '../assets/stationData.js';
+import { stationData } from '../../assets/stationData.js';
 /**
  * Explanation of the parameters that are being passed in the 'execute' function
  * @param {Object} chatmsg This is the object that is passed by the event listening for messages being sent in chat
@@ -13,7 +13,9 @@ function execute(chatmsg, args, Minecraft) {
     chatmsg.canceled = true;
     let msg = "";
     for (const key in stationData) {
-        msg += "§2" + key + "§r - §c" + stationData[key].ename + "\n";
+        let lines = stationData[key].line.split(" ");
+        let res = (lines.length >= 3) ? `§2${key}§r - §c${stationData[key].cname}檢查站 ${stationData[key].ename} Checkpoint\n` : `§2${key}§r - §c${stationData[key].cname}站 ${stationData[key].ename} Station\n`;
+        msg += res;
     }
     Minecraft.Commands.run(`tellraw "${chatmsg.sender.name}" {"rawtext":[{"text":"${msg}"}]}`);
 };

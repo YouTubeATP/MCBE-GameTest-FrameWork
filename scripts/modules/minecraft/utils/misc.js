@@ -12,7 +12,7 @@ function rainbowText(text) {
     const letter = text.replace(/§./g, '').split('');
     let newMessage = '', rainbowIndex = 0;
     letter.forEach(letter => {
-        if(letter !== ' ') {
+        if (letter !== ' ') {
             newMessage += `${rainbowCode[rainbowIndex]}${letter}`;
             rainbowIndex + 1 >= rainbowCode.length ? rainbowIndex = 0 : rainbowIndex++;
         } else newMessage += ' ';
@@ -26,17 +26,25 @@ function rainbowText(text) {
  * @returns user message. Chat output would be: [rank] <USERNAME> The users message
  */
 function displayRank(chatmsg) {
-    const data = runCommand(`tag ${chatmsg.sender.name} list`).result;
-    chatmsg.canceled = true;
-    if (data.statusMessage.includes("vice_president")) {
+    try {
+        var data = runCommand(`tag ${chatmsg.sender.name} list`).result
+    } catch (err) {} // This makes sure that the errors do not spam the chat
+    if (chatmsg.message === undefined) { // If for some reason the message is undefined
+        return true;
+    } else if (data.statusMessage.includes("vice_president")) {
+        chatmsg.canceled = true;
         return runCommand(`tellraw @a {"rawtext":[{"text":"[§5副總統 Vice President§r] <§5${chatmsg.sender.name}§r> ${chatmsg.message.replace(/"/g, '\\"')}"}]}`);
     } else if (data.statusMessage.includes("president")) {
+        chatmsg.canceled = true;
         return runCommand(`tellraw @a {"rawtext":[{"text":"[§6總統 President§r] <§6${chatmsg.sender.name}§r> ${chatmsg.message.replace(/"/g, '\\"')}"}]}`);
     } else if (data.statusMessage.includes("vice_president")) {
+        chatmsg.canceled = true;
         return runCommand(`tellraw @a {"rawtext":[{"text":"[§5副總統 Vice President§r] <§5${chatmsg.sender.name}§r> ${chatmsg.message.replace(/"/g, '\\"')}"}]}`);
     } else if (data.statusMessage.includes("operator")) {
+        chatmsg.canceled = true;
         return runCommand(`tellraw @a {"rawtext":[{"text":"[§c操作者 Operator§r] <§c${chatmsg.sender.name}§r> ${chatmsg.message.replace(/"/g, '\\"')}"}]}`);
     } else {
+        chatmsg.canceled = true;
         return runCommand(`tellraw @a {"rawtext":[{"text":"[§2市民 Citizen§r] <§2${chatmsg.sender.name}§r> ${chatmsg.message.replace(/"/g, '\\"')}"}]}`);
     };
 };
@@ -62,9 +70,9 @@ function writeLeaderboard({ floatingTextIdentifier, leaderboardEntity, objective
         const data = runCommand(`testfor @e[type=${floatingTextIdentifier}]`).result.statusMessage.replace(/\n|§/g, '');
         dataGamertag = data.match(new RegExp(`(?<=\\$\\(${objective}-objective{gamertag: ).+?(?=, score: (-\\d+|\\d+)}\\))`, 'g'));
         dataScore = data.match(new RegExp(`(?<=\\$\\(${objective}-objective{gamertag: \\D.*, score: ).+?(?=}\\))`, 'g'));
-    } catch(err) {};
-    
-    if(dataGamertag) dataGamertag.map(function(gamertag, index) {
+    } catch (err) { };
+
+    if (dataGamertag) dataGamertag.map(function (gamertag, index) {
         leaderboard.push({ gamertag, score: dataScore[index] });
     });
     leaderboard = [...new Map(leaderboard.map(item => [item['gamertag'], item])).values()];
@@ -75,15 +83,15 @@ function writeLeaderboard({ floatingTextIdentifier, leaderboardEntity, objective
         onlineLeaderboard.push({ gamertag: player.name, score });
     });
 
-    for(let i = 0; i < onlineLeaderboard.length; i++) {
+    for (let i = 0; i < onlineLeaderboard.length; i++) {
         const objIndex = leaderboard.findIndex(obj => obj.gamertag === onlineLeaderboard[i].gamertag);
-        if(objIndex !== -1) leaderboard.splice(objIndex, 1);
+        if (objIndex !== -1) leaderboard.splice(objIndex, 1);
         leaderboard.push(onlineLeaderboard[i]);
     };
 
     leaderboard.sort((a, b) => b.score - a.score);
     let leaderboardString = `${leaderboardHeading}\n§r`, saveData = '';
-    for(let i = 0; i < displayLength && i < leaderboard.length; i++) {
+    for (let i = 0; i < displayLength && i < leaderboard.length; i++) {
         leaderboardString += `${leaderboardLayout.replace(/\$\(RANK\)/g, i + 1).replace(/\$\(GAMERTAG\)/g, leaderboard[i].gamertag).replace(/\$\(SCORE\)/g, compressScore ? compressNum(leaderboard[i].score) : formatScore ? leaderboard[i].score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : leaderboard[i].score)}§r\n`;
         saveData += `$(${objective}-objective{gamertag: ${leaderboard[i].gamertag}, score: ${leaderboard[i].score}}) `;
     };

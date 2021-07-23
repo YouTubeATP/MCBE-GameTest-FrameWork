@@ -11,9 +11,10 @@ export * as eval from './private/eval.js';
 //!Category Misc
 export * as home from './misc/home.js';
 
-//!Category Station
-export * as liststations from './station/list.js';
-export * as tpstation from './station/teleport.js';
+//!Category MR
+export * as liststations from './mr/list.js';
+export * as tpstation from './mr/teleport.js';
+export * as stationdata from './mr/data.js';
 
-//!Category WE
+//!Category WorldEdit
 export * as we from './worldedit/worldedit.js';

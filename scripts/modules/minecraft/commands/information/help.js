@@ -21,7 +21,8 @@ function execute(chatmsg, args, Minecraft) {
     const helpCmdList = ['help', 'eval', 'home', 'we', 'liststations', 'tpstation', 'ping'];
     const features = [
         '§f- §dRanks - Allows for the display of ranks in chat.',
-        '§f- §dTeleport to Station - Teleport to any MR station.',
+        '§f- §dMR Station Data - Get data of any MR station.',
+        '§f- §dTeleport to MR Station - Teleport to any MR station.',
         '§f- §dHomes - Add a home and warp to it anytime.',
         '§f- §dWorldEdit - Shortern building time.',
     ];

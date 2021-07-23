@@ -9,6 +9,7 @@ var config = {
 };
 
 Minecraft.World.events.beforeChat.subscribe(chatmsg => { //Event to listen for message being sent in chat
+    if(chatmsg.message === undefined) return;
     if(!chatmsg.message.startsWith(config.commandPrefix)) return; //If message doesn't start with the prefix don't execute any of the stuff below
 
     const args = chatmsg.message.slice(config.commandPrefix.length).trim().split(/ +/); //args just splits the message by "space" so you can take different inputs of the user message
@@ -28,6 +29,7 @@ Minecraft.World.events.beforeChat.subscribe(chatmsg => { //Event to listen for m
 
 //I seperated these stuff to make stuff more organized
 Minecraft.World.events.beforeChat.subscribe(chatmsg => { //Another chat listening event
+    if(chatmsg.message === undefined) return;
     if(chatmsg.message.startsWith(config.commandPrefix)) return; //If they are trying to execute a custom command don't execute the stuff below
     if(utils.findTag({ entityRequirements: `[type=player,name="${chatmsg.sender.name}"]` }, { searchTag: 'rainbowText'})) chatmsg.message = misc.rainbowText(chatmsg.message); //Look for the tag 'rainbowText' on the player who executed the command, if they have the tag make their chat text to rainbow
     misc.displayRank(chatmsg); //This will check if they have a rank, if they do add a rank to their text in chat

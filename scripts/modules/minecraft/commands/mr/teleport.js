@@ -1,8 +1,8 @@
 var commandInfo = { //This variable holds the command information for help command to display. Such as the description and usage
-    description: 'Teleport to a MR station.',
+    description: 'Teleport to an MR station.',
     usage: ['tpstation <station code>']
 };
-import { stationData } from '../assets/stationData.js';
+import { stationData } from '../../assets/stationData.js';
 /**
  * Explanation of the parameters that are being passed in the 'execute' function
  * @param {Object} chatmsg This is the object that is passed by the event listening for messages being sent in chat
