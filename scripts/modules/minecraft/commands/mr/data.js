@@ -19,7 +19,7 @@ function execute(chatmsg, args, Minecraft) {
         var key = args[0];
         var lang = args[1] ? args[1] : "eng";
         var name = (lang === "eng") ? stationData[key].ename : stationData[key].cname;
-        var lines = stationData[key].line;
+        var lines = stationData[key].line.split(" ");
         if (lang === "eng") {
             var stationType = (lines.length >= 3) ? "Checkpoint" : "Station";
             var lineNames = {"MSL": "Milestone Line", "NEL": "New Era Line", "EWL": "East-West Line", "CAL": "Cave Line", "CIL": "City Line", "EBL": "EST Branch Line", "IIL": "Interisland Line"};
