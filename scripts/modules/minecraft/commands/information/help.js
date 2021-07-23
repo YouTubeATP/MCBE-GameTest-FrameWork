@@ -18,7 +18,7 @@ var commandInfo = {
  */
 function execute(chatmsg, args, Minecraft) {
     const prefix = config.commandPrefix;
-    const helpCmdList = ['help', 'eval', 'home', 'we', 'liststations', 'tpstation', 'ping'];
+    const helpCmdList = ['help', 'eval', 'home', 'we', 'stationdata', 'liststations', 'tpstation', 'ping'];
     const features = [
         '§f- §dRanks - Allows for the display of ranks in chat.',
         '§f- §dMR Station Data - Get data of any MR station.',
