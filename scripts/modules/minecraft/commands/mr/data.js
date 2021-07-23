@@ -16,6 +16,7 @@ import { stationData } from '../../assets/stationData.js';
 function execute(chatmsg, args, Minecraft) {
     chatmsg.canceled = true;
     if (args[0] in stationData) {
+        var key = args[0];
         var lang = args[1] ? args[1] : "eng";
         var name = (lang === "eng") ? stationData[key].ename : stationData[key].cname;
         var lines = stationData[key].line;

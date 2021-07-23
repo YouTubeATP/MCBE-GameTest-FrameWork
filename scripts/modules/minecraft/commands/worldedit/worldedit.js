@@ -73,6 +73,7 @@ function execute(chatmsg, args, Minecraft) {
         } else {
             runCommand(`tag "${chatmsg.sender.name}" add "$(Pos1{Player-Name: ${chatmsg.sender.name}, X: ${args[1]}, Y: ${args[2]}, Z: ${args[3]}})"`);
         }
+        chatmsg.canceled = true;
         Minecraft.Commands.run(`tellraw "${chatmsg.sender.name}" {"rawtext":[{"text":"§cPos1 set to (§2${Math.trunc(chatmsg.sender.location.x)}§c, §2${Math.trunc(chatmsg.sender.location.y)}§c, §2${Math.trunc(chatmsg.sender.location.z)}§c)"}]}`);
     } else if (args[0] == "pos2") {
         if (!(args[1] && args[2] && args[3])) {
@@ -80,6 +81,7 @@ function execute(chatmsg, args, Minecraft) {
         } else {
             runCommand(`tag "${chatmsg.sender.name}" add "$(Pos2{Player-Name: ${chatmsg.sender.name}, X: ${args[1]}, Y: ${args[2]}, Z: ${args[3]}})"`);
         }
+        chatmsg.canceled = true;
         Minecraft.Commands.run(`tellraw "${chatmsg.sender.name}" {"rawtext":[{"text":"§cPos2 set to (§2${Math.trunc(chatmsg.sender.location.x)}§c, §2${Math.trunc(chatmsg.sender.location.y)}§c, §2${Math.trunc(chatmsg.sender.location.z)}§c)"}]}`);
     } else if (args[0] == "fill") {
         let pos1 = findPos1XYZ;
